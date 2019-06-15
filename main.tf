@@ -1,6 +1,6 @@
 # Configure the provider
 provider "azurerm" {
-    version = "=1.20.0"
+    version = "=1.27.0"
 }
 
 # Create a new resource group
