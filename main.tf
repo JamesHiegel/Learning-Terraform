@@ -55,7 +55,7 @@ resource "azurerm_public_ip" "publicip" {
     name                         = "${var.resource_prefix}TFPublicIP"
     location                     = "${var.location}"
     resource_group_name          = "${azurerm_resource_group.rg.name}"
-    public_ip_address_allocation = "dynamic"
+    allocation_method            = "Dynamic"
     }
 
 # Create Network Security Group and rule
@@ -126,6 +126,7 @@ resource "azurerm_virtual_machine" "vm" {
 
     provisioner "file" {
         connection {
+            host = "${azurerm_public_ip.publicip.ip_address}"
             type = "ssh"
             user = "${var.admin_username}"
             password = "${var.admin_password}"
@@ -137,6 +138,7 @@ resource "azurerm_virtual_machine" "vm" {
 
     provisioner "remote-exec" {
         connection {
+            host = "${azurerm_public_ip.publicip.ip_address}"
             type = "ssh"
             user     = "${var.admin_username}"
             password = "${var.admin_password}"
